@@ -4,6 +4,7 @@ import './App.css';
 import MessageList from './MessageList';
 import InputField from './InputField';
 import fetchChatGPTResponse from './fetchChatGPTResponse';
+import speakWithOpenAI from './speakWithOpenAI';
 
 const SYSTEM_CONTENT = `
     あなたはスクールカウンセラーです。
@@ -32,10 +33,14 @@ function App() {
     // ChatGPTを使って返す
     const response = await fetchChatGPTResponse(messages, SYSTEM_CONTENT, text);
 
+    // メッセージを追加する
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: response, sender: 'assistant' },
     ]);
+
+    // TTSで音声出力する
+    await speakWithOpenAI(response);
   };
 
   return (
