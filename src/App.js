@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { Box } from '@mui/material';
 import './App.css';
+import MessageList from './MessageList';
+import InputField from './InputField';
 
 function App() {
+  const [messages, setMessages] = useState([]);
+
+  const handleSend = async (text) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text, sender: 'user' },
+    ]);
+
+    // そのまま返す
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: text, sender: 'assistant' },
+    ]);
+    // そのまま返す終わり
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box className="App">
+      <MessageList messages={messages} />
+      <InputField onSend={handleSend} />
+    </Box>
   );
 }
 
