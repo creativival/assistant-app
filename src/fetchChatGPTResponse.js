@@ -1,29 +1,29 @@
-import OpenAI from 'openai';
+import axios from 'axios';
 
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+const fetchChatGPTResponse = async (messages, text) => {
+  console.log('Request:', messages)
+  messages.push({ role: 'user', content: text });
+  console.log('Request:', messages)
 
-const fetchChatGPTResponse = async (messages, SYSTEM_CONTENT, text) => {
   try {
-    const messageData = [
-      {role: 'system', content: SYSTEM_CONTENT}
-    ];
+    // OpenAI APIを使用してテキストから音声を生成
+    const response = await axios.post(
+      'https://stzql4zy3i.execute-api.ap-northeast-1.amazonaws.com/default/schoolCounselor',
+      {
+        messages: messages,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+    );
+    console.log('Response:', response);
 
-    messages.forEach((message) => {
-      messageData.push({role: message.sender, content: message.text});
-    });
-
-    messageData.push({role: 'user', content: text});
-
-    // OpenAI APIの設定
-    const openai = new OpenAI({ apiKey,
-      dangerouslyAllowBrowser: true });
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: messageData
-    });
+    const assistantMessage = response.data.message;
 
     // 返答を返却する
-    return response.choices[0].message.content;
+    return assistantMessage;
   } catch (error) {
     console.error('Error:', error);
     // エラーメッセージを返却する
