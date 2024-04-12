@@ -1,36 +1,41 @@
-import OpenAI from 'openai';
-
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+import axios from 'axios';
 
 const speakWithOpenAI = async (text) => {
   try {
-    // // OpenAI APIの設定
-    // const openai = new OpenAI({ apiKey,
-    //   dangerouslyAllowBrowser: true });
-    // const response = await openai.audio.speech.create({
-    //   model: "tts-1",
-    //   voice: "nova",
-    //   input: text,
-    // });
-    //
-    // // レスポンスからオーディオデータを取得
-    // const audioData = await response.arrayBuffer();
-    //
-    // // Audioオブジェクトを作成
-    // const audio = new Audio();
-    //
-    // // オーディオデータをBlobに変換してソースに設定
-    // const audioBlob = new Blob([audioData], {type: 'audio/mpeg'});
-    // const audioUrl = URL.createObjectURL(audioBlob);
-    // audio.src = audioUrl;
-    //
-    // // 音声再生
-    // await audio.play();
-    //
-    // // 再生が終わるまで待機
-    // await new Promise((resolve) => {
-    //   audio.onended = resolve;
-    // });
+    console.log('Request:', text)
+    // OpenAI APIを使用してテキストから音声を生成
+    const response = await axios.post(
+      'https://1kwyzzn1dk.execute-api.ap-northeast-1.amazonaws.com/default/ttsOpenAI',
+      {text},
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        responseType: 'arraybuffer'  // レスポンスをArrayBufferとして受け取る
+      },
+    );
+    console.log('Response:', response);
+
+    const audioData = response.data;
+    console.log('Audio data:', audioData)
+
+    // Audioオブジェクトを作成
+    const audio = new Audio();
+
+    // オーディオデータをBlobに変換してソースに設定
+    const audioBlob = new Blob([audioData], {type: 'audio/mpeg'});
+    console.log('Audio blob:', audioBlob);
+    const audioUrl = URL.createObjectURL(audioBlob);
+    console.log('Audio URL:', audioUrl);
+    audio.src = audioUrl;
+
+    // 音声再生
+    await audio.play();
+
+    // 再生が終わるまで待機
+    await new Promise((resolve) => {
+      audio.onended = resolve;
+    });
 
     console.log('TTS playback completed.');
   } catch (error) {

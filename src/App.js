@@ -28,8 +28,8 @@ function App() {
       { content: response, role: 'assistant' },
     ]);
 
-    // // TTSで音声出力する
-    // await speakWithOpenAI(response);
+    // TTSで音声出力する
+    await speakWithOpenAI(response);
   };
 
   return (
