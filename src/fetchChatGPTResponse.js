@@ -1,16 +1,13 @@
 import axios from 'axios';
 
 const fetchChatGPTResponse = async (messages, text) => {
-  console.log('Request:', messages)
-  messages.push({ role: 'user', content: text });
-  console.log('Request:', messages)
-
   try {
     // OpenAI APIを使用してテキストから音声を生成
+    const updatedMessages = [...messages, {role: 'user', content: text}];
     const response = await axios.post(
       'https://stzql4zy3i.execute-api.ap-northeast-1.amazonaws.com/default/schoolCounselor',
       {
-        messages: messages,
+        messages: updatedMessages,
       },
       {
         headers: {

@@ -1,3 +1,4 @@
+/* Appコンテナの基本スタイル設定 */
 .App {
   display: flex;
   flex-direction: column;
@@ -6,6 +7,7 @@
   box-sizing: border-box;
 }
 
+/* メッセージリストコンテナのスタイリング、スクロール可能 */
 .message-list {
   flex: 1;
   overflow-y: auto;
@@ -13,6 +15,7 @@
   flex-direction: column;
 }
 
+/* 個々のメッセージアイテムのスタイル設定 */
 .message {
   margin-bottom: 10px;
   padding: 10px;
@@ -20,21 +23,25 @@
   max-width: 70%;
 }
 
+/* ユーザーメッセージの配置と背景色設定 */
 .message.user {
   align-self: flex-end;
   background-color: #DCF8C6;
 }
 
+/* アシスタントメッセージの配置と背景色設定 */
 .message.assistant {
   align-self: flex-start;
   background-color: #F0F0F0;
 }
 
+/* 入力エリアコンテナのレイアウト設定 */
 .input-container {
   display: flex;
   margin-top: 20px;
 }
 
+/* テキスト入力フィールドの拡張と隣接マージン設定 */
 .input-field {
   flex: 1;
   margin-right: 10px;

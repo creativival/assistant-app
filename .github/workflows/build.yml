@@ -10,12 +10,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3 # Node.js 20に対応したバージョンにアップグレード
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Node.jsのバージョンを20に設定
+          node-version: '20'
 
       - name: Build
         env:
@@ -25,7 +25,7 @@ jobs:
           npm run build
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4 # Node.js 20に対応したバージョンにアップグレード
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build

@@ -1,21 +1,21 @@
 import React, {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
 
-export default function InputField({ onSend }) {
-  const [text, setText] = useState('');
+export default function InputField({ onSend }) { // （1）
+  const [text, setText] = useState(''); // （2）
 
-  const handleChange = (event) => {
+  const handleChange = (event) => { // （3）
     setText(event.target.value);
   };
 
-  const handleSendClick = () => {
+  const handleSendClick = () => { // （4）
     if (text.trim() !== '') {
       onSend(text);
       setText('');
     }
   };
 
-  return (
+  return ( // （5）
     <Box className="input-container">
       <TextField
         className="input-field"
